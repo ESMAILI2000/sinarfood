@@ -69,7 +69,7 @@ fun SinarTheme(
     }
     MaterialTheme(
             colorScheme = colorScheme,
-            typography = Typography,
+            typography = provideTypography(),
             content = content
     )
 }

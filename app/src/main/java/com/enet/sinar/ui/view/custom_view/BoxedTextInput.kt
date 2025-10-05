@@ -35,7 +35,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.enet.sinar.ui.theme.Background
@@ -55,6 +57,8 @@ fun BoxedTextInput(
     textArrangement: Arrangement.Horizontal = Arrangement.SpaceBetween,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    with: Dp = 63.dp,
+    height: Dp = 56.dp
 ) {
     val textMeasurer = rememberTextMeasurer()
     val textLayoutResult: TextLayoutResult =
@@ -100,7 +104,7 @@ fun BoxedTextInput(
                         val currentChar = value.getOrNull(index)
                         Box(
                             Modifier
-                                .size(63.dp,56.dp)
+                                .size(with,56.dp)
                                 .background(if (currentChar != null) backgroundColor else Color.Transparent,textBorderShape)
                                 .border(
                                     width = 1.dp,

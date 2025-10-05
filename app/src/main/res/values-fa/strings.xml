@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    splash-->
+
     <string name="app_name">سینار</string>
-    <string name="splash_tagline">سینار، پلی به خدمات دانشگاهی هوشمند</string>
+<!--    splash-->
+    <string name="app_name_splash">سینــار</string>
+    <string name="splash_tagline">هدف استارت اپ سینار، آزادی نهاد علم از انحصار دولت و سوسیالیست هاست، در این مسیر بسیار از تکنولوژی بلاک چین بهره خواهیم برد، پرده نسخه، کتابخانه‌های دانشگاهی</string>
 
 <!--    login-->
     <string name="login">ورود به حساب</string>
+    <string name="lnguage">فارسی</string>
     <string name="enter_your_information_accurately">لطفا اطلاعات زیر را با دقت پر کنید.</string>
     <string name="academics">دانشگاهیان</string>
     <string name="citizens">شهروندان</string>
@@ -14,6 +17,7 @@
     <string name="forgot_password">فراموشی رمز عبور؟</string>
     <string name="recover_password">بازیابی رمز عبور</string>
     <string name="button_login">ورود به حساب</string>
+    <string name="recover_account">بازیابی حساب</string>
     <string name="full_name">نام و نام خانوادگی</string>
     <string name="checkbox_terms0">تمامی </string>
     <string name="checkbox_terms1">قوانین و مقررات</string>
@@ -28,21 +32,22 @@
     <string name="please_fill_information">لطفا شماره تلفن خود را با دقت پر کنید.</string>
     <string name="get_code">دریافت کد</string>
     <string name="phone_number">شماره تلفن</string>
-    <string name="app_version">1.0.3</string>
-    <string name="resend_after">ارسال مجدد کد بعد از: </string>
+    <string name="app_version">۱.۰.۳</string>
+    <string name="resend_after">ارسال مجدد کد بعد از:</string>
     <string name="resend">ارسال مجدد</string>
     <string name="change_password">تغییر گذرواژه</string>
 
 <!--    wallet-->
     <string name="write_down_your_recovery">عبارت بازیابی خود را یادداشت کنید</string>
-    <string name="save_your_recovery_phrase_either">عبارت بازیابی خود را ذخیره کنید یا به صورت امن</string>
-    <string name="enter_this_phrase">پشتیبان گیری کنید. در مرحله بعد باید عبارت را دوباره وارد کنید</string>
+    <string name="save_your_recovery_phrase_either">عبارت بازیابی خود را ذخیره کنید. آن را یادداشت کنید یا به صورت امن</string>
+    <string name="enter_this_phrase">پشتیبان گیری کنید.</string>
     <string name="your_wallet_address">آدرس کیف پول شما : </string>
     <string name="copy">کپی کردن</string>
     <string name="save_to_device">ذخیره در دستگاه</string>
     <string name="next_step">مرحله بعدی</string>
 
 <!--    home-->
+    <string name="app_name_title">سیـنار</string>
     <string name="national_id">کد ملی</string>
     <string name="current_blockchain_network">شبکه فعلی بلاکچین</string>
     <string name="token_balance">موجودی توکن</string>
@@ -52,7 +57,7 @@
     <string name="transaction">معامله</string>
     <string name="payment">پرداخت</string>
     <string name="dormitory_reservation">رزرو خوابگاه</string>
-    <string name="food_reservation_exchange">رزرو و تبادل غذا</string>
+    <string name="food_reservation_exchange">تبادل غذا</string>
     <string name="exchange">صرافی</string>
     <string name="events">ایونت ها</string>
     <string name="tree_network">شبکه درختی</string>
@@ -86,32 +91,41 @@
     <string name="app_theme">تم اپلیکیشن</string>
     <string name="logout">خروج</string>
 
-<!--    دیال.گ پروفایل-->
+<!--    دیالوگ پروفایل-->
     <string name="new_password">رمز عبور جدید</string>
     <string name="confirm_new_password">تکرار رمز عبور جدید</string>
     <string name="save_changes">ثبت تغییرات</string>
 
-<!--    دیالوگ سومی-->
+<!--    دیالوگ منو-->
     <string name="create_account">ساخت حساب جدید</string>
     <string name="add_network">افزودن شبکه بلاکچین</string>
     <string name="token_balances">موجودی توکن‌ها</string>
     <string name="roadmap">نقشه راه</string>
-    <string name="view_private_keys">مشاهده کلیدهای خصوصی</string>
+    <string name="view_private_keys">مشاهده کلید خصوصی</string>
     <string name="recover_accounts">بازیابی حساب‌های قبلی</string>
     <string name="add_token">افزودن توکن</string>
 
+<!--    دیالوگ ایونت ها-->
+    <string name="active_events">ایونت‌های فعال</string>
+    <string name="budget_management">مدیریت بودجه</string>
+    <string name="associations_and_clubs">انجمن‌ها و کانون‌ها</string>
+    <string name="event_management">مدیریت ایونت‌ها</string>
+    <string name="create_and_edit">ثبت و ویرایش</string>
+
 <!--    اطلاعات حساب-->
     <string name="title_account_info">اطلاعات حساب</string>
-    <string name="label_wallet_address">آدرس والت شما:</string>
+    <string name="label_wallet_address">آدرس ولت شما:</string>
     <string name="label_share_with">اشتراک‌گذاری با</string>
 
 <!--    صورتحساب-->
     <string name="label_tracking_code">کد پیگیری:</string>
     <string name="label_deposit_amount">واریز:</string>
     <string name="label_from_address">از آدرس:</string>
-    <string name="label_registered_domain">دامنه ثبت‌شده:</string>
-    <string name="label_payment_reason">دلیل پرداخت:</string>
+    <string name="label_registered_domain">دامنه ثبت ‌شده:</string>
+    <string name="label_payment_reason">علت پرداخت:</string>
     <string name="label_deposit_time">زمان واریز:</string>
+    <string name="label_deposit_date">تاریخ واریز:</string>
+    <string name="label_receipt_status">وضعیت دریافت:</string>
     <string name="status_confirmed">تایید شده</string>
     <string name="status_rejected">رد شده</string>
     <string name="status_pending">در انتظار تایید</string>
@@ -160,5 +174,106 @@
 دقایقی دیگر مشاهده خواهید کرد</string>
     <string name="transaction_serial">سریال تراکنش : </string>
     <string name="view_explorer">مشاهده در اکسپلور</string>
+
+    <!--    دیالوگ افزودن توکن-->
+    <string name="token_added_successfully">افزودن توکن باموفقیت انجام شد !</string>
+    <string name="got_it">فهمیدم</string>
+    <string name="token_name">نام توکن</string>
+    <string name="price">قیمت</string>
+    <string name="hour">1ساعته</string>
+    <string name="token_to_account">توکن به حساب</string>
+    <string name="token_was_not_found">متاسفانه ! توکن شما پیدا نشد :(</string>
+
+    <string name="balance">موجودی</string>
+
+<!--    دیالوگ افزودن شبکه-->
+    <string name="enter_rpc_url">Enter RPC URL : *</string>
+    <string name="enter_chain_id">Enter Chain ID : *</string>
+    <string name="enter_currency_Symbol">Enter Currency Symbol :</string>
+    <string name="enter_block_Explorer_url">Enter Block Explorer URL :</string>
+    <string name="enter_network">Enter Network</string>
+    <string name="add_network_dialog">افزودن شبکه</string>
+
+    <!--    دیالوگ وثیقه گذاری-->
+    <string name="stake_for_miner">وثیقه گذاری برای ماینر</string>
+    <string name="minimum_stake_required">حداقل وثیقه لازم برای تبدیل به ماینر نود : </string>
+    <string name="I_have_read_and_agree_to_the_smart0">اسمارت کانترکت و قوانین را</string>
+    <string name="I_have_read_and_agree_to_the_smart1"> معالعه کرده </string>
+    <string name="I_have_read_and_agree_to_the_smart2">و همه موارد مندرج را </string>
+    <string name="I_have_read_and_agree_to_the_smart3">میپذیرم.</string>
+    <string name="will_be_deducted_from_your_wallet0">کسر</string>
+    <string name="will_be_deducted_from_your_wallet1">از کیف پول</string>
+    <string name="deploy_smart_contract">انتشار اسمارت کانترکت</string>
+
+    <!--    دیالوگ خروج از ماینینگ-->
+    <string name="exit_mining">خروج از ماینینگ</string>
+    <string name="are_you_exit_mining">آیا با آزادسازی وثیقه و خروج از حالت ماینینگ
+موافق هستید ؟</string>
+
+    <!--    دیالوگ وضعیت درآمدی-->
+    <string name="your_earning_status">وضعیت درآمدی شما</string>
+    <string name="The_following_information_income">اطلاعات زیر، درمورد درآمد و فعالیت شما هست</string>
+    <string name="miner_node_selection_score">شاخص انتخاب به عنوان ماینر نود</string>
+    <string name="increase_in_collateral">افزایش وثیقه</string>
+    <string name="exit_mining_and_release_stake">خروج از ماینینگ و آزاد سازی وثیقه</string>
+    <string name="from_date">از تاریخ :</string>
+    <string name="to_date">تا تاریخ :</string>
+    <string name="from_time">از ساعت :</string>
+    <string name="to_time">تا ساعت :</string>
+    <string name="day">روز</string>
+    <string name="online">آنلاین</string>
+    <string name="confirm">تایید کردن</string>
+
+    <!--    دیالوگ وضعیت شبکه-->
+    <string name="your_network_status">وضعیت شبکه شما</string>
+    <string name="The_following_information_network">اطلاعات زیر، درمورد فعالیت شبکه شما هست</string>
+    <string name="number_validator_nodes">تعداد Validator Node</string>
+    <string name="total_events_generated">تعداد ایونت ساخته شده</string>
+    <string name="total_events_network">تعداد کل ایونت‌های شبکه</string>
+    <string name="event_reward">ایونت ریوارد</string>
+    <string name="mining_speed">سرعت پردازش</string>
+    <string name="each_transaction">هر تراکنش</string>
+    <string name="nft">NFT</string>
+    <string name="smart_contract">اسمارت کانترکت</string>
+
+    <!--    دیالوگ قفل توکن-->
+    <string name="token_lock">قفل کردن توکن</string>
+    <string name="do_you_confirm_locking_token">آیا مطمئن هستید میخواهید توکن را قفل کنید ؟</string>
+
+    <!--    دیالوگ ارسال چک-->
+    <string name="send_check_another_person">ارسال چک برای شخص دیگر</string>
+    <string name="enter_recipient_wallet_address">آدرس کیف پول شخص مدنظر را وارد کنید.</string>
+    <string name="from">از</string>
+    <string name="to">به</string>
+    <string name="issue_date">تاریخ صدور : </string>
+    <string name="for_example_check_purchasing">برای مثال : این چک برای خرید خودرو و ...</string>
+    <string name="character">200 کارکتر</string>
+    <string name="send_message">ارسال پیام</string>
+
+    <!--    دیالوگ افزودن عضو جدید-->
+    <string name="add_new_member">افزودن عضو جدید</string>
+    <string name="enter_wallet_address_person">آدرس کیف پول شخص مدنظر را وارد کنید.</string>
+
+    <!--    دیالوگ ساخت ورک اسپیس-->
+    <string name="create_new_workspace">ساخت ورک اسپیس جدید</string>
+    <string name="for_example_Nature_hiking_group">برای مثال : گروه طبیعت گردی</string>
+    <string name="profile_setting_workspace">تنظیم پروفایل</string>
+    <string name="change_photo">تغییر عکس</string>
+    <string name="member_wallet_address">آدرس کیف پول عضو</string>
+    <string name="profile_set">پروفایل تنظیم شد</string>
+    <string name="wallet_address_workspace">آدرس کیف پول : </string>
+
+    <!--    دیالوگ ریپورت-->
+    <string name="loading_report">درحال بارگیری گزارش ...</string>
+    <string name="please_wait_moment">چند لحظه صبر نمایید</string>
+    <string name="your_report_has_been_loaded">گزارش شما بارگیری شد</string>
+    <string name="successfully_loaded">باموفقیت بارگیری شد</string>
+    <string name="open_report">بازکردن گزارش</string>
+
+
+    <!--    دیالوگ نهایی کردن پرداخت-->
+    <string name="finalize_payment">نهایی کردن پرداخت</string>
+    <string name="are_you_sure_proceed_with_the_payment">آیا مطمئن هستید میخواهید پرداخت کنید ؟</string>
+    <string name="confirm_payment">پرداخت نهایی</string>
 
 </resources>

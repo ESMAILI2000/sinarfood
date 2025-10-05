@@ -9,11 +9,16 @@ android {
     namespace = "com.enet.sinar"
     compileSdk = 34
 
+        lint {
+            checkReleaseBuilds = false
+            abortOnError = false
+        }
+
     defaultConfig {
         applicationId = "com.sinar.university"
         minSdk = 26
         //noinspection ExpiredTargetSdkVersion
-        targetSdk = 29
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -22,7 +27,14 @@ android {
             useSupportLibrary = true
         }
     }
-
+//    signingConfigs {
+//        release {
+//            storeFile file("C:\\Users\\Rafno\\Documents\\back.jks")
+//            storePassword "9812440001"
+//            keyAlias "sinar"
+//            keyPassword "9812440001"
+//        }
+//    }
     buildTypes {
         release {
             isMinifyEnabled = false

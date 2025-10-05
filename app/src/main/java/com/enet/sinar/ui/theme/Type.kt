@@ -1,7 +1,9 @@
 package com.enet.sinar.ui.theme
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.material3.Typography
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -9,7 +11,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.enet.sinar.R
-
+import com.enet.sinar.ui.utility.MySharedPreferences
 
 
 val default = FontFamily(
@@ -40,14 +42,28 @@ val iranSansFamily = FontFamily(
         Font(R.font.ir_ultralight, FontWeight.ExtraLight),
 )
 
+val bodyLargeStyleEnglish = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        letterSpacing = 0.sp
+)
+
+val bodyLargeStylePersian = TextStyle(
+        fontFamily = iranSansFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        letterSpacing = 0.sp
+)
+
 val Typography = Typography(
         bodyLarge = TextStyle(
-                fontFamily = FontFamily.Default,
+        fontFamily = iranSansFamily,
                 fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-//                lineHeight = 24.sp,
-                letterSpacing = 0.sp
-        ),
+                 fontSize = 14.sp,
+                 letterSpacing = 0.sp
+         ),
+
         displayLarge = TextStyle(
                 fontFamily = displayLargeFontFamily,
                 fontWeight = FontWeight.Bold,

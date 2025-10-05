@@ -10,10 +10,17 @@ enum class GeneralRoutes {
      Splash,
      Login,
      AboutUs,
+    Exchange,
+    Otp,
+    ChangePassword,
+    InformationPay,
+    HistoryTransaction,
+    WalletWords
 }
 
 enum class StudentRoutes {
      Home,
+    ReservationFood
 }
 
 enum class StaffRoutes {
