@@ -1,5 +1,5 @@
 package com.enet.sinar.ui.model
 
-class SuccessfullResponse (
+data class SuccessResponse (
     val message: String
 )

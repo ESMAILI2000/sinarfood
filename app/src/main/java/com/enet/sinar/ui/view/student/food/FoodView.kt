@@ -15,14 +15,11 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -40,33 +37,30 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalBottomSheetDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.rememberBottomSheetScaffoldState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -77,7 +71,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -93,8 +86,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -103,6 +94,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.enet.sinar.R
+import com.enet.sinar.ui.model.FoodDto
 import com.enet.sinar.ui.theme.Background
 import com.enet.sinar.ui.theme.EerieBlack
 import com.enet.sinar.ui.theme.Err
@@ -110,7 +102,6 @@ import com.enet.sinar.ui.theme.GargoyleGas
 import com.enet.sinar.ui.theme.Gray04
 import com.enet.sinar.ui.theme.GrayB
 import com.enet.sinar.ui.theme.GrayC
-import com.enet.sinar.ui.theme.GrayE
 import com.enet.sinar.ui.theme.GrayF
 import com.enet.sinar.ui.theme.Green
 import com.enet.sinar.ui.theme.Gunmetal
@@ -121,20 +112,19 @@ import com.enet.sinar.ui.theme.Succes
 import com.enet.sinar.ui.theme.Water
 import com.enet.sinar.ui.theme.White
 import com.enet.sinar.ui.utility.MySharedPreferences
-import com.enet.sinar.ui.utility.MySharedPreferences.getFoodType
-import com.enet.sinar.ui.utility.MySharedPreferences.getPickupLocation
-import com.enet.sinar.ui.utility.MySharedPreferences.setFoodType
-import com.enet.sinar.ui.utility.MySharedPreferences.setPickupLocation
+import com.enet.sinar.ui.utility.UiState
 import com.enet.sinar.ui.view.MenuItem
 import com.enet.sinar.ui.view.convertEnglishDigitsToPersian
 import com.enet.sinar.ui.view.formatWithDots
+import com.enet.sinar.ui.viewModel.FoodViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReservationFoodScreen(
     modifier: Modifier = Modifier,
-    onNavigateToBack: () -> Unit = {}
+    onNavigateToBack: () -> Unit = {},
+    viewModel: FoodViewModel = viewModel()
 ){
 
     val context = LocalContext.current
@@ -155,9 +145,9 @@ fun ReservationFoodScreen(
     var isVisibleItem = remember {
         mutableStateListOf(false, false, false, false)
     }
-    val currentLang = MySharedPreferences.getLang(context)
+    val lang = MySharedPreferences.getLang(context)
 
-    val itemsFoods = if (currentLang == "fa") listOf(
+    val itemsFoods = if (lang == "fa") listOf(
         FoodItem("قرمه سبزی","سلف مرکزی",false, painterResource(id = R.drawable.ic_ghorme), color = Color(0xFFFF383C)),
         FoodItem("چلوکباب","سلف هنر و معماری",true, painterResource(id = R.drawable.ic_kabab),color = Color(0xFF34C759)),
         FoodItem("چلوکباب","سلف علوم پایه",true, painterResource(id = R.drawable.ic_kabab),color = Color(0xFF0088FF)),
@@ -168,7 +158,7 @@ fun ReservationFoodScreen(
         )
 
 
-    val layoutDirection = if (currentLang == "fa") LayoutDirection.Ltr else LayoutDirection.Rtl
+    val layoutDirection = if (lang == "fa") LayoutDirection.Ltr else LayoutDirection.Rtl
 
     CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
 
@@ -192,7 +182,7 @@ fun ReservationFoodScreen(
                 sheetContent = {
                     if (sheetValueState == 1){
                         SheetValueAddFood(
-                            lang = currentLang.toString(),
+                            lang = lang.toString(),
                             onSelectFoodType = {
                                 sheetValueState = 2
                                 scope.launch {  state.bottomSheetState.partialExpand() }
@@ -205,7 +195,7 @@ fun ReservationFoodScreen(
                     } else if ( sheetValueState == 2){
                         SheetValueSelectFoodType(
                             isExpanded = state.bottomSheetState.currentValue == SheetValue.Expanded,
-                            currentLang = currentLang.toString(),
+                            lang = lang.toString(),
                             onClose = {
                                 sheetValueState = 1
                                 scope.launch {  state.bottomSheetState.expand() }
@@ -214,7 +204,7 @@ fun ReservationFoodScreen(
                     } else if (sheetValueState == 3){
                         SheetValueSelectPickupLocation(
                             isExpanded = state.bottomSheetState.currentValue == SheetValue.Expanded,
-                            currentLang = currentLang.toString(),
+                            lang = lang.toString(),
                             onClose = {
                                 sheetValueState = 1
                                 scope.launch {  state.bottomSheetState.expand() }
@@ -258,7 +248,7 @@ fun ReservationFoodScreen(
                                             color = Gray04
                                         )
                                         Icon(
-                                            imageVector = if (currentLang == "fa") Icons.Default.ArrowBack else Icons.Default.ArrowForward,
+                                            imageVector = if (lang == "fa") Icons.Default.ArrowBack else Icons.Default.ArrowForward,
                                             contentDescription = "" ,
                                             tint = EerieBlack,
                                             modifier = Modifier
@@ -315,7 +305,7 @@ fun ReservationFoodScreen(
                     }
 
                     Column {
-                        CompositionLocalProvider(LocalLayoutDirection provides if (currentLang == "fa") LayoutDirection.Rtl else LayoutDirection.Ltr) {
+                        CompositionLocalProvider(LocalLayoutDirection provides if (lang == "fa") LayoutDirection.Rtl else LayoutDirection.Ltr) {
                             TopAppBar(
                                 title = {
                                     Text(
@@ -326,7 +316,7 @@ fun ReservationFoodScreen(
                                     )},
                                 actions = {
                                     Icon(
-                                        imageVector = if (currentLang == "fa") Icons.Default.ArrowBack else Icons.Default.ArrowForward,
+                                        imageVector = if (lang == "fa") Icons.Default.ArrowBack else Icons.Default.ArrowForward,
                                         contentDescription = null,
                                         tint = Gunmetal,
                                         modifier = Modifier
@@ -554,7 +544,7 @@ fun ReservationFoodScreen(
                                                     verticalAlignment = Alignment.CenterVertically,
                                                     horizontalArrangement = Arrangement.spacedBy(2.dp)
                                                 ) {
-                                                    val amountAvsinText = if (currentLang == "fa") convertEnglishDigitsToPersian("20") else "20"
+                                                    val amountAvsinText = if (lang == "fa") convertEnglishDigitsToPersian("20") else "20"
                                                     Text(text = amountAvsinText,
                                                         style = MaterialTheme.typography.bodyLarge,
                                                         color = PoliceBlue
@@ -572,7 +562,7 @@ fun ReservationFoodScreen(
                                                         style = MaterialTheme.typography.bodySmall,
                                                         color = GrayF
                                                     )
-                                                    val amountTomanText = formatWithDots("10000",currentLang.toString()) // اضافه کردن نقطه بعد از 3 رقم
+                                                    val amountTomanText = formatWithDots("10000",lang.toString()) // اضافه کردن نقطه بعد از 3 رقم
                                                     Text(text = amountTomanText,
                                                         style = MaterialTheme.typography.bodySmall,
                                                         color = GrayF
@@ -664,7 +654,7 @@ fun ReservationFoodScreen(
                                                                     .size(18.dp)
                                                                     .offset(x = -screenWidth * 0.004f)
                                                             )
-                                                            val timeText = if (currentLang == "fa") convertEnglishDigitsToPersian("01:21:30") else "01:21:30"
+                                                            val timeText = if (lang == "fa") convertEnglishDigitsToPersian("01:21:30") else "01:21:30"
                                                             Text(text = timeText,
                                                                 style = MaterialTheme.typography.bodySmall,
                                                                 color = PoliceBlue
@@ -683,7 +673,7 @@ fun ReservationFoodScreen(
                                                             horizontalArrangement = Arrangement.Center,
                                                             verticalAlignment = Alignment.CenterVertically
                                                         ) {
-                                                            val qrCodeText = if (currentLang == "fa") convertEnglishDigitsToPersian("58947664") else "58947664"
+                                                            val qrCodeText = if (lang == "fa") convertEnglishDigitsToPersian("58947664") else "58947664"
                                                             Text(text = qrCodeText,
                                                                 style = MaterialTheme.typography.bodySmall,
                                                                 color = PoliceBlue
@@ -791,13 +781,13 @@ fun ReservationFoodScreen(
 
     }
 
-    @Composable
-    fun SheetValueAddFood(
-        viewModel: Foodviewmodel = viewModel(),
-        onSelectFoodType: () -> Unit={},
-        onSelectPickupLocation: () -> Unit={},
-        lang:String = "fa",
-        modifier: Modifier = Modifier){
+@Composable
+fun SheetValueAddFood(
+    viewModel: FoodViewModel = viewModel(),
+    onSelectFoodType: () -> Unit={},
+    onSelectPickupLocation: () -> Unit={},
+    lang:String = "fa",
+    modifier: Modifier = Modifier){
 
         var foodType by remember { mutableStateOf("") }
         var suggestedPrice by remember { mutableStateOf("") }
@@ -1104,16 +1094,16 @@ fun ReservationFoodScreen(
 
     }
 
-    @Composable
-    fun SheetValueSelectFoodType(
-        viewModel: Foodviewmodel = viewModel(),
-        isExpanded: Boolean,
-        currentLang: String,
-        onClose: () -> Unit,
-        modifier: Modifier = Modifier){
+@Composable
+fun SheetValueSelectFoodType(
+    viewModel: FoodViewModel = viewModel(),
+    isExpanded: Boolean,
+    lang: String,
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier){
 
         val context = LocalContext.current
-        val itemsFoodsType = if (currentLang == "fa") listOf(
+        val itemsFoodsType = if (lang == "fa") listOf(
             MenuItem("قرمه سبزی", painterResource(id = R.drawable.ic_ghorme)),
             MenuItem("قرمه سبزی", painterResource(id = R.drawable.ic_ghorme)),
             MenuItem("قرمه سبزی", painterResource(id = R.drawable.ic_ghorme)),
@@ -1131,7 +1121,7 @@ fun ReservationFoodScreen(
             MenuItem("Ghormeh Sabzi", painterResource(id = R.drawable.ic_ghorme)),
             )
 
-        val layoutDirection = if (currentLang == "fa") LayoutDirection.Rtl else LayoutDirection.Ltr
+        val layoutDirection = if (lang == "fa") LayoutDirection.Rtl else LayoutDirection.Ltr
 
         CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
             BoxWithConstraints (
@@ -1235,16 +1225,16 @@ fun ReservationFoodScreen(
 
     }
 
-    @Composable
-    fun SheetValueSelectPickupLocation(
-        viewModel: Foodviewmodel = viewModel(),
-        isExpanded: Boolean,
-        currentLang: String,
-        onClose: () -> Unit,
-        modifier: Modifier = Modifier){
+@Composable
+fun SheetValueSelectPickupLocation(
+    viewModel: FoodViewModel = viewModel(),
+    isExpanded: Boolean,
+    lang: String,
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier){
 
         val context = LocalContext.current
-        val itemsPickupLocation = if (currentLang == "fa") listOf(
+        val itemsPickupLocation = if (lang == "fa") listOf(
             MenuItem("سلف مرکزی", painterResource(id = R.drawable.ic_kabab)),
             MenuItem("سلف هنر و معماری", painterResource(id = R.drawable.ic_kabab)),
             MenuItem("سلف علوم پایه", painterResource(id = R.drawable.ic_kabab)),
@@ -1259,7 +1249,7 @@ fun ReservationFoodScreen(
                 MenuItem("Central Faculty", painterResource(id = R.drawable.ic_kabab))
         )
 
-        val layoutDirection = if (currentLang == "fa") LayoutDirection.Rtl else LayoutDirection.Ltr
+        val layoutDirection = if (lang == "fa") LayoutDirection.Rtl else LayoutDirection.Ltr
 
         CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
             BoxWithConstraints (
@@ -1363,6 +1353,55 @@ fun ReservationFoodScreen(
         }
 
     }
+
+@Composable
+fun FoodScreen() {
+    val viewModel: FoodViewModel = viewModel()
+
+    val uiState by viewModel.foodsState.collectAsState()
+
+    when (uiState) {
+        is UiState.Idle -> {
+            Text(text = "در حال آماده‌سازی...")
+        }
+        is UiState.Loading -> {
+            CircularProgressIndicator()
+        }
+        is UiState.Success -> {
+            val foods = (uiState as UiState.Success<List<FoodDto>>).data
+            LazyColumn {
+                items(foods.size) { index ->
+                    FoodItem(foods[index])
+                }
+            }
+        }
+        is UiState.Error -> {
+            val errorMessage = (uiState as UiState.Error).message
+            Text(text = "خطا: $errorMessage", color = Color.Red)
+        }
+    }
+}
+
+@Composable
+fun FoodItem(food: FoodDto) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Text(
+            text = food.id.toString(),
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = food.name,
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
 
     @Preview(
         showBackground = true,
